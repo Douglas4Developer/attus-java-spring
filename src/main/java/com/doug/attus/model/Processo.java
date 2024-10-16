@@ -1,13 +1,20 @@
 package com.doug.attus.model;
+
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 @Table(name = "processo")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Processo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,62 +36,4 @@ public class Processo {
 
     @OneToMany(mappedBy = "processo", cascade = CascadeType.ALL)
     private List<Acao> acoes;
-
-    // Getters e Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumeroProcesso() {
-        return numeroProcesso;
-    }
-
-    public void setNumeroProcesso(String numeroProcesso) {
-        this.numeroProcesso = numeroProcesso;
-    }
-
-    public LocalDate getDataAbertura() {
-        return dataAbertura;
-    }
-
-    public void setDataAbertura(LocalDate dataAbertura) {
-        this.dataAbertura = dataAbertura;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public List<Parte> getPartes() {
-        return partes;
-    }
-
-    public void setPartes(List<Parte> partes) {
-        this.partes = partes;
-    }
-
-    public List<Acao> getAcoes() {
-        return acoes;
-    }
-
-    public void setAcoes(List<Acao> acoes) {
-        this.acoes = acoes;
-    }
 }

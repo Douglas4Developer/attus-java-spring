@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+    xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+    targetNamespace="http://bpmn.io/schema/bpmn"
+    id="Definitions_1">
+
+  <bpmn:process id="processoOrquestracao" name="Processo Orquestracao">
+    <bpmn:startEvent id="StartEvent" name="Novo Processo Criado" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent" targetRef="Task1" />
+
+    <bpmn:userTask id="Task1" name="Ação: Audiência Realizada" />
+    <bpmn:endEvent id="EndEvent" name="Processo Arquivado" />
+
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task1" targetRef="EndEvent" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="processoOrquestracao">
+      <!-- Diagram elements -->
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+
+</bpmn:definitions>
