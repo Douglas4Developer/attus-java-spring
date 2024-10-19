@@ -1,13 +1,16 @@
 package com.doug.attus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "parte")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Parte {
 
     @Id
@@ -31,5 +34,6 @@ public class Parte {
 
     @ManyToOne
     @JoinColumn(name = "processo_id", nullable = false)
+    @JsonIgnore  // Evita referência circular
     private Processo processo;
 }

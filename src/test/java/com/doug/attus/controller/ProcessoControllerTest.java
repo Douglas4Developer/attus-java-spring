@@ -1,5 +1,6 @@
 package com.doug.attus.controller;
 
+import com.doug.attus.dto.ProcessoDTO;
 import com.doug.attus.model.Processo;
 import com.doug.attus.service.ProcessoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,15 +39,20 @@ class ProcessoControllerTest {
         processo.setDescricao("Descrição do Processo");
         processo.setStatus("Ativo");
 
-        when(processoService.criarProcesso(processo)).thenReturn(processo);
+        ProcessoDTO processoDTO = new ProcessoDTO(processo);
 
-        ResponseEntity<Processo> response = processoController.criarProcesso(processo);
+        // Mocking the service to return a Processo
+        when(processoService.criarProcesso(any(Processo.class))).thenReturn(processo);
+
+        // Call the controller method
+        ResponseEntity<ProcessoDTO> response = processoController.criarProcesso(processoDTO);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(processo, response.getBody());
-        verify(processoService, times(1)).criarProcesso(processo);
+        assertEquals(processoDTO, response.getBody());  // Compare the DTOs
+        verify(processoService, times(1)).criarProcesso(any(Processo.class));
     }
+
 
     @Test
     void buscarPorNumero() {
@@ -54,13 +60,15 @@ class ProcessoControllerTest {
         Processo processo = new Processo();
         processo.setNumeroProcesso(numeroProcesso);
 
+        ProcessoDTO processoDTO = new ProcessoDTO(processo);
+
         when(processoService.buscarPorNumero(numeroProcesso)).thenReturn(processo);
 
-        ResponseEntity<Processo> response = processoController.buscarPorNumero(numeroProcesso);
+        ResponseEntity<ProcessoDTO> response = processoController.buscarPorNumero(numeroProcesso);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(processo, response.getBody());
+        assertEquals(processoDTO, response.getBody());
         verify(processoService, times(1)).buscarPorNumero(numeroProcesso);
     }
 
@@ -82,13 +90,16 @@ class ProcessoControllerTest {
         List<Processo> processos = new ArrayList<>();
         processos.add(new Processo());
 
+        List<ProcessoDTO> processoDTOs = new ArrayList<>();
+        processos.forEach(p -> processoDTOs.add(new ProcessoDTO(p)));
+
         when(processoService.listarTodosProcessos()).thenReturn(processos);
 
-        ResponseEntity<List<Processo>> response = processoController.listarTodosProcessos();
+        ResponseEntity<List<ProcessoDTO>> response = processoController.listarTodosProcessos();
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
-        assertEquals(processos, response.getBody());
+        assertEquals(processoDTOs, response.getBody());
         verify(processoService, times(1)).listarTodosProcessos();
     }
 }

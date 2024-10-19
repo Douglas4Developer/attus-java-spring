@@ -17,3 +17,25 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+  info:
+    title: "Attus - Sistema de Gerenciamento de Processos Jurídicos"
+    description: "API para Gerenciamento de Processos, Partes e Ações no contexto jurídico."
+    version: "1.0.0"
+
+
+# Configuração do Camunda
+camunda.bpm.admin-user:
+  id: admin
+  password: admin
+
+# Configuração de logs para melhor depuração
+logging:
+  level:
+    org.springframework: INFO
+    org.camunda.bpm: DEBUG  # Aumentar a verbosidade dos logs do Camunda para depuração
+
+
+
+# Configurações adicionais (se necessário)
+server:
+  port: 8080  # Porta padrão para o servidor

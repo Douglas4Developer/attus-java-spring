@@ -1,7 +1,10 @@
-package com.doug.attus.service;
+package service;
 
 import com.doug.attus.model.Acao;
+import com.doug.attus.model.Processo;
 import com.doug.attus.repository.AcaoRepository;
+import com.doug.attus.repository.ProcessoRepository;
+import com.doug.attus.service.imp.AcaoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,10 +21,13 @@ import static org.mockito.Mockito.*;
 class AcaoServiceTest {
 
     @InjectMocks
-    private AcaoService acaoService;
+    private AcaoServiceImpl acaoService;
 
     @Mock
     private AcaoRepository acaoRepository;
+
+    @Mock
+    private ProcessoRepository processoRepository; // Mock do ProcessoRepository adicionado
 
     @BeforeEach
     void setUp() {
@@ -29,15 +36,22 @@ class AcaoServiceTest {
 
     @Test
     void adicionarAcao() {
+        Long processoId = 1L;
         Acao acao = new Acao();
         acao.setId(1L);
 
+        Processo processo = new Processo();
+        processo.setId(processoId);
+
+        // Mock do ProcessoRepository para retornar um processo válido
+        when(processoRepository.findById(processoId)).thenReturn(Optional.of(processo));
         when(acaoRepository.save(acao)).thenReturn(acao);
 
-        Acao resultado = acaoService.adicionarAcao(1L, acao);
+        Acao resultado = acaoService.adicionarAcao(processoId, acao);
 
         assertNotNull(resultado);
         assertEquals(acao.getId(), resultado.getId());
+        verify(processoRepository, times(1)).findById(processoId); // Verifica se o processo foi buscado
         verify(acaoRepository, times(1)).save(acao);
     }
 

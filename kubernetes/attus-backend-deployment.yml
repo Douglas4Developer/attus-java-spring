@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attus-backend
+  labels:
+    app: attus-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: attus-backend
+  template:
+    metadata:
+      labels:
+        app: attus-backend
+    spec:
+      containers:
+        - name: attus-backend
+          image: attus-backend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres:5432/attusdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: attus
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password

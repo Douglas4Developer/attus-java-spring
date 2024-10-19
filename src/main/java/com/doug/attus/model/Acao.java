@@ -1,7 +1,7 @@
 package com.doug.attus.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -9,6 +9,9 @@ import java.time.LocalDate;
 @Table(name = "acao")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Acao {
 
     @Id
@@ -26,5 +29,6 @@ public class Acao {
 
     @ManyToOne
     @JoinColumn(name = "processo_id", nullable = false)
+    @JsonIgnore  // Evita referência circular
     private Processo processo;
 }

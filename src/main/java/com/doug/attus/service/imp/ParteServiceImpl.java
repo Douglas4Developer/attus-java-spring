@@ -1,7 +1,7 @@
 package com.doug.attus.service.imp;
 
 
-import com.doug.attus.exception.ResourceNotFoundException;
+import com.doug.attus.exception.ProcessoNaoEncontradoException;
 import com.doug.attus.model.Parte;
 import com.doug.attus.model.Processo;
 import com.doug.attus.repository.ParteRepository;
@@ -24,7 +24,7 @@ public class ParteServiceImpl implements ParteService {
     @Override
     public Parte adicionarParte(Long processoId, Parte parte) {
         Processo processo = processoRepository.findById(processoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Processo com ID " + processoId + " não encontrado"));
+                .orElseThrow(() -> new ProcessoNaoEncontradoException("Processo com ID " + processoId + " não encontrado"));
         parte.setProcesso(processo);
         return parteRepository.save(parte);
     }

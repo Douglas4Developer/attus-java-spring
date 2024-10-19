@@ -1,5 +1,6 @@
 package com.doug.attus.controller;
 
+import com.doug.attus.dto.ParteDTO;
 import com.doug.attus.model.Parte;
 import com.doug.attus.service.ParteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/partes")
@@ -24,30 +26,27 @@ public class ParteController {
     @Operation(summary = "Adiciona uma parte a um processo", description = "Adiciona uma parte ao processo com o ID informado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Parte adicionada com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Parte.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ParteDTO.class))),
             @ApiResponse(responseCode = "404", description = "Processo não encontrado", content = @Content)
     })
     @PostMapping("/processos/{processoId}")
-    public ResponseEntity<Parte> adicionarParte(
-            @Parameter(description = "ID do processo onde a parte será adicionada")
-            @PathVariable Long processoId,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados da nova parte")
-            @RequestBody Parte parte) {
-        Parte novaParte = parteService.adicionarParte(processoId, parte);
-        return ResponseEntity.ok(novaParte);
+    public ResponseEntity<ParteDTO> adicionarParte(
+            @Parameter(description = "ID do processo onde a parte será adicionada") @PathVariable Long processoId,
+            @RequestBody ParteDTO parteInputDTO) {
+        Parte novaParte = parteService.adicionarParte(processoId, parteInputDTO.toEntity());
+        return ResponseEntity.ok(new ParteDTO(novaParte));
     }
 
     @Operation(summary = "Lista as partes de um processo", description = "Retorna todas as partes de um processo específico")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de partes retornada com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Parte.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ParteDTO.class))),
             @ApiResponse(responseCode = "404", description = "Processo não encontrado", content = @Content)
     })
     @GetMapping("/processos/{processoId}")
-    public ResponseEntity<List<Parte>> listarPartesPorProcesso(
-            @Parameter(description = "ID do processo cujas partes serão listadas")
-            @PathVariable Long processoId) {
-        List<Parte> partes = parteService.listarPartesPorProcesso(processoId);
+    public ResponseEntity<List<ParteDTO>> listarPartesPorProcesso(@PathVariable Long processoId) {
+        List<ParteDTO> partes = parteService.listarPartesPorProcesso(processoId)
+                .stream().map(ParteDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(partes);
     }
 }

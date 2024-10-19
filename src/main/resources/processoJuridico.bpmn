@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.28.0">
+  <bpmn:process id="processoJuridico" name="Processo Jurídico" isExecutable="true">
+    <bpmn:startEvent id="startProcesso" name="Início do Processo">
+      <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="audienciaTask" name="Audiência">
+      <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="verifyActionTypeGateway" name="Verificar Tipo de Ação">
+      <bpmn:incoming>SequenceFlow_2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_3</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="changeStatusToSuspendedTask" name="Mudar Status para Suspenso" camunda:delegateExpression="#{processoCamundaService}">
+      <bpmn:incoming>SequenceFlow_3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_3" sourceRef="verifyActionTypeGateway" targetRef="changeStatusToSuspendedTask">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${tipoAcao == 'audiência'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="arquivarProcessoTask" name="Arquivar Processo" camunda:delegateExpression="#{processoCamundaService}">
+      <bpmn:incoming>SequenceFlow_4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1j9h7mi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="endProcesso" name="Fim do Processo">
+      <bpmn:incoming>SequenceFlow_5</bpmn:incoming>
+      <bpmn:incoming>Flow_1j9h7mi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1" sourceRef="startProcesso" targetRef="audienciaTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_2" sourceRef="audienciaTask" targetRef="verifyActionTypeGateway" />
+    <bpmn:sequenceFlow id="SequenceFlow_4" sourceRef="verifyActionTypeGateway" targetRef="arquivarProcessoTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_5" sourceRef="changeStatusToSuspendedTask" targetRef="endProcesso" />
+    <bpmn:sequenceFlow id="Flow_1j9h7mi" sourceRef="arquivarProcessoTask" targetRef="endProcesso" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="processoJuridico">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="startProcesso">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="audienciaTask_di" bpmnElement="audienciaTask">
+        <dc:Bounds x="240" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endProcesso_di" bpmnElement="endProcesso">
+        <dc:Bounds x="1052" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1029" y="258" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="arquivarProcessoTask_di" bpmnElement="arquivarProcessoTask">
+        <dc:Bounds x="740" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="verifyActionTypeGateway_di" bpmnElement="verifyActionTypeGateway" isMarkerVisible="true">
+        <dc:Bounds x="465" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="451" y="97.5" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="changeStatusToSuspendedTask_di" bpmnElement="changeStatusToSuspendedTask">
+        <dc:Bounds x="520" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_3_di" bpmnElement="SequenceFlow_3">
+        <di:waypoint x="490" y="185" />
+        <di:waypoint x="490" y="233" />
+        <di:waypoint x="570" y="233" />
+        <di:waypoint x="570" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="228" y="117" />
+        <di:waypoint x="228" y="260" />
+        <di:waypoint x="240" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_2_di" bpmnElement="SequenceFlow_2">
+        <di:waypoint x="340" y="260" />
+        <di:waypoint x="490" y="260" />
+        <di:waypoint x="490" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_4_di" bpmnElement="SequenceFlow_4">
+        <di:waypoint x="490" y="185" />
+        <di:waypoint x="490" y="200" />
+        <di:waypoint x="750" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1j9h7mi_di" bpmnElement="Flow_1j9h7mi">
+        <di:waypoint x="840" y="240" />
+        <di:waypoint x="1052" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
