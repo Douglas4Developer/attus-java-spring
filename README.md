@@ -93,6 +93,66 @@ Ou, para rodar via Docker:
 docker container run --rm --network=host -e SONAR_HOST_URL="http://localhost:9000" -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli -D"sonar.projectKey=attus" -D"sonar.sources=/usr/src/src" -D"sonar.java.binaries=/usr/src/target/classes" -D"sonar.host.url=http://localhost:9000" -D"sonar.login=seu-token-sonar"
 ```
 
+### 7. Subindo o Projeto Localmente e Expondo Externamente com Ngrok
+
+#### 1. Inicie o Minikube e Configure o Docker:
+```bash
+minikube start
+minikube -p minikube docker-env --shell powershell | Invoke-Expression
+```
+
+#### 2. Build da Imagem Docker:
+```bash
+docker build -t attus-backend:latest .
+```
+
+#### 3. Atualize o Deployment no Kubernetes:
+```bash
+kubectl delete -f kubernetes/attus-backend-deployment.yml
+kubectl apply -f kubernetes/attus-backend-deployment.yml
+```
+
+#### 4. Obtenha o URL Local do Serviço no Minikube:
+```bash
+minikube service attus-backend-service --url
+```
+
+#### 5. Exponha o Serviço com Ngrok:
+```bash
+ngrok http <porta_minikube>
+```
+Exemplo:
+```bash
+ngrok http 57486
+```
+
+#### 6. Acesse o Swagger Externamente:
+```bash
+https://xyz123.ngrok.io/swagger-ui/index.html
+```
+
+### Resumo de Comandos:
+1. **Iniciar Minikube**:  
+   ```bash
+   minikube start
+   ```
+2. **Build Docker**:  
+   ```bash
+   docker build -t attus-backend:latest .
+   ```
+3. **Atualizar Kubernetes**:  
+   ```bash
+   kubectl apply -f kubernetes/attus-backend-deployment.yml
+   ```
+4. **Obter URL Minikube**:  
+   ```bash
+   minikube service attus-backend-service --url
+   ```
+5. **Expor com Ngrok**:  
+   ```bash
+   ngrok http <porta>
+   ```
+
 ## Como Contribuir
 
 Se você deseja contribuir com o projeto, siga as etapas abaixo:
