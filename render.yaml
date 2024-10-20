@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: attus-java-spring
+    env: docker
+    buildCommand: "mvn clean package"
+    startCommand: "docker build -t attus-backend . && docker run -p 8080:8080 attus-backend"
