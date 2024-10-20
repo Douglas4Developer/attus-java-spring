@@ -1,6 +1,8 @@
 # Attus Backend - Sistema de Gerenciamento de Processos Jurídicos
 
 Este é um projeto desenvolvido com o objetivo de criar uma API RESTful para o gerenciamento de processos jurídicos. O sistema permite a criação, listagem, e gestão de processos, partes envolvidas e ações processuais, além de automatizações usando **Camunda BPM**.
+![image](https://github.com/user-attachments/assets/2f3f21e9-6c37-49d2-8f45-2796475cc4a4)
+![image](https://github.com/user-attachments/assets/455bebba-edaa-4be5-bb29-e109288989a6)
 
 ## Tecnologias Utilizadas
 
