@@ -79,6 +79,8 @@ Os relatórios de cobertura serão gerados na pasta `target/site/jacoco`.
 
 #### 6. Análise de Código com SonarQube
 
+![image](https://github.com/user-attachments/assets/5ae181b0-ef65-4a6a-a572-ce18bc5a803e)
+
 Se você quiser rodar a análise de código no **SonarQube**, certifique-se de que o **SonarQube** está rodando e use o seguinte comando:
 
 ```bash
