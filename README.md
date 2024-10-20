@@ -3,6 +3,8 @@
 Este é um projeto desenvolvido com o objetivo de criar uma API RESTful para o gerenciamento de processos jurídicos. O sistema permite a criação, listagem, e gestão de processos, partes envolvidas e ações processuais, além de automatizações usando **Camunda BPM**.
 ![image](https://github.com/user-attachments/assets/2f3f21e9-6c37-49d2-8f45-2796475cc4a4)
 ![image](https://github.com/user-attachments/assets/455bebba-edaa-4be5-bb29-e109288989a6)
+![image](https://github.com/user-attachments/assets/7cf103a8-26e4-4c4e-ac98-acf4e4c8b31f)
+
 
 ## Tecnologias Utilizadas
 
@@ -154,6 +156,17 @@ https://xyz123.ngrok.io/swagger-ui/index.html
    ```bash
    ngrok http <porta>
    ```
+**
+### 8 - Camunda BPM - Orquestração de Processos
+O Camunda BPM é uma plataforma de automação de processos de negócios que permite criar fluxos de trabalho visuais,
+combinando tarefas manuais e automatizadas. No projeto Attus Backend, o Camunda é utilizado para automatizar etapas processuais,
+como a mudança de status de um processo após uma audiência, oferecendo mais eficiência ao sistema.
+
+Principais Benefícios:
+Automatização: Reduz a necessidade de intervenção manual, automatizando mudanças de status ou arquivamento de processos.
+Integração com Java/Spring Boot: A integração nativa facilita a orquestração de processos complexos.
+Monitoramento em Tempo Real: O Camunda Cockpit permite acompanhar e gerenciar o andamento dos processos de forma visual e centralizada.
+Essa combinação torna o gerenciamento dos processos jurídicos mais eficiente e menos suscetível a erros humanos.
 
 ## Como Contribuir
 
