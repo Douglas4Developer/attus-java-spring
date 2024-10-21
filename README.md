@@ -47,7 +47,23 @@ cd attus-backend
 
 #### 2. Configuração do Banco de Dados
 
-O projeto utiliza PostgreSQL como banco de dados. Caso você não tenha o PostgreSQL instalado localmente, pode usar o Docker:
+### Configuração Resumida do application.yml
+
+1. **Banco de Dados**: O projeto utiliza PostgreSQL, com as credenciais e URL do banco configurados diretamente no arquivo `application.yml`. Recomenda-se usar variáveis de ambiente para gerenciar essas credenciais de forma segura.
+
+2. **Hibernate e JPA**: Configurado para não alterar automaticamente o schema do banco de dados (`ddl-auto: none`), com a exibição de consultas SQL habilitada e suporte ao PostgreSQL através do dialeto específico.
+
+3. **Flyway**: Ferramenta de migração de banco de dados habilitada, que aplica scripts de migração armazenados na pasta `db/migration`.
+
+4. **Documentação Swagger/OpenAPI**: A documentação da API está disponível no caminho `/swagger-ui.html`, facilitando o acesso e uso da API.
+
+5. **Camunda BPM**: A plataforma de automação de processos está configurada com um usuário administrador (`admin/admin`), que deve ser alterado em produção para garantir a segurança.
+
+6. **Logs**: Configurações de log ajustadas para aumentar a verbosidade nos logs do Camunda (`DEBUG`) para depuração mais detalhada.
+
+7. **Servidor**: O servidor Spring Boot roda na porta padrão **8080**.
+
+### O projeto utiliza PostgreSQL como banco de dados. Caso você não tenha o PostgreSQL instalado localmente, pode usar o Docker:
 
 ```bash
 docker-compose up -d
