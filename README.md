@@ -167,6 +167,41 @@ Automatização: Reduz a necessidade de intervenção manual, automatizando muda
 Integração com Java/Spring Boot: A integração nativa facilita a orquestração de processos complexos.
 Monitoramento em Tempo Real: O Camunda Cockpit permite acompanhar e gerenciar o andamento dos processos de forma visual e centralizada.
 Essa combinação torna o gerenciamento dos processos jurídicos mais eficiente e menos suscetível a erros humanos.
+ 
+### 9 - Testes Automatizados
+
+O projeto conta com uma suíte de testes automatizados, que visa garantir o funcionamento correto das principais funcionalidades:
+
+- **Testes de Controladores**: Validam as requisições HTTP, garantindo que as rotas estão funcionando corretamente e que as respostas da API estão no formato esperado.
+  - Exemplo: `AcaoControllerTest`, `ParteControllerTest`, `ProcessoControllerTest`
+
+- **Testes de Serviços**: Garantem que a lógica de negócio está correta e que os dados estão sendo manipulados corretamente antes de serem enviados para o banco de dados.
+  - Exemplo: `AcaoServiceTest`, `ParteServiceTest`, `ProcessoServiceTest`
+
+Os testes utilizam o **JUnit** como framework principal e podem ser executados via Maven ou através do Docker, gerando relatórios detalhados de cobertura de código com **Jacoco**.
+
+---
+
+### Cobertura de Testes com Jacoco
+Para gerar o relatório de cobertura de testes, execute o comando:
+```bash
+mvn clean verify
+```
+Os relatórios serão gerados em `target/site/jacoco`, permitindo uma visualização clara das áreas do código que estão cobertas pelos testes automatizados.
+
+---
+
+## Análise de Código com SonarQube
+Para garantir a qualidade do código, utilizamos o **SonarQube** para realizar análises estáticas e detectar potenciais problemas. 
+
+Passos para rodar a análise:
+1. Instale o SonarQube localmente ou utilize o Docker.
+2. Execute o comando para análise:
+   ```bash
+   mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=seu-token-sonar
+   ```
+
+Este projeto adota boas práticas de desenvolvimento, como princípios **SOLID**, **Clean Code** e **Design Patterns**, além de ser amplamente testado com **JUnit** e analisado com **SonarQube**.
 
 ## Como Contribuir
 
@@ -183,4 +218,3 @@ Se você deseja contribuir com o projeto, siga as etapas abaixo:
 Este projeto foi desenvolvido com o foco em aplicar boas práticas de desenvolvimento, como princípios **SOLID**, **Clean Code**, e utilização de **Design Patterns**. Além disso, a cobertura de testes é garantida com o uso do **Jacoco** e a qualidade do código é assegurada com o **SonarQube**.
 
 Sinta-se à vontade para explorar, contribuir ou utilizar como base para outros projetos!
- 
